@@ -20,6 +20,9 @@ ACCALIAS=$(echo "${ACCALIAS:-'ACC'}" | tr '[:upper:]' '[:lower:]')
 read -p "Provide target database name (should be created manually): " DBSNAME
 DBSNAME=$(echo "${DBSNAME:-'apps'}" | tr '[:upper:]' '[:lower:]')
 
+read -p "Set password for rstudio user: " RSPASSW
+RSPASSW=$(echo "${RSPASSW}")
+
 read -r -p "Proceed building the deployment? [Y/n]: " response
 case "${response}" in
     [nN][oO]|[nN]) 
@@ -59,6 +62,7 @@ sed -i "s|&{ dbsname }|${DBSNAME}|g" ${BASEDIR}/Makefile
 sed -i "s|&{ cnxname }|${CXNNAME}|g" ${BASEDIR}/Makefile
 sed -i "s|&{ accname }|${ORGNAME}-${ACCALIAS}|g" ${BASEDIR}/Makefile
 
+sed -i "s|&{ rspassw }|${RSPASSW}|g" ${BASEDIR}/img/Dockerfile
 sed -i "s|&{ depname }|${DEPNAME}|g" ${BASEDIR}/img/service.yaml
 sed -i "s|&{ dbsname }|${DBSNAME}|g" ${BASEDIR}/img/service.yaml
 sed -i "s|&{ accname }|${ORGNAME}-${ACCALIAS}|g" ${BASEDIR}/img/service.yaml

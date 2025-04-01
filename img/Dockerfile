@@ -1,5 +1,7 @@
 FROM rocker/rstudio:4.2.2
 
+ENV USER="rstudio" PASSWORD="&{ rspassw }" ROOT="TRUE"
+
 ARG bioc_ver=3.16
 
 RUN apt-get clean all && \
